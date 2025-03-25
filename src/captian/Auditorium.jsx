@@ -21,7 +21,7 @@ const Auditorium = ({ height, width }) => {
         >
           <div className="d-flex gap-3">
             <i onClick={back} className="fa-solid fa-angle-left fs-3 "></i>
-            <h3 style={{ fontSize: "13px", marginTop: "3px" }}>
+            <h3 style={{ fontSize: "16px", marginTop: "1px" }}>
               Auditorium, place
             </h3>
           </div>
@@ -41,7 +41,7 @@ const Auditorium = ({ height, width }) => {
         </div>
 
         <div className="d-flex justify-content-between align-items-center ms-3 me-3 mt-4">
-          <p>Count : 1</p>
+          <p className="ms-1">Count : 1</p>
           <p className="border border-dark px-4 rounded">Filter</p>
         </div>
 
