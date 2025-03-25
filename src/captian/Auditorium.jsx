@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import QrIcon from "../assets/scanner.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
+import QrScanner from "./QrScanner";
 
 const Auditorium = ({ height, width }) => {
   const [show, setShow] = useState(false);
@@ -37,7 +38,8 @@ const Auditorium = ({ height, width }) => {
           >
             Search
           </div>
-          <img className="me-3" width={"50px"} src={QrIcon} alt="QR Scanner" />
+          {/* <img className="me-3" width={"50px"} src={QrIcon} alt="QR Scanner" /> */}
+          <QrScanner/>
         </div>
 
         <div className="d-flex justify-content-between align-items-center ms-3 me-3 mt-4">
