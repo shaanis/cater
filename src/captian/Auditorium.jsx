@@ -121,8 +121,8 @@ const Auditorium = ({ height, width }) => {
         </div>
 
         <button
-          className="btn btn-success d-flex align-items-center justify-content-center rounded-circle"
-          style={{ position: "fixed", bottom: "120px", right: "15px",width:'40px',height:"40px" }}
+          className="btn btn-success fs-4 d-flex align-items-center justify-content-center rounded-circle"
+          style={{ position: "fixed", bottom: "120px", right: "15px",width:'45px',height:"45px" }}
         >
           +
         </button>
