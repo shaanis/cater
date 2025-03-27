@@ -70,7 +70,7 @@ const Auditorium = ({ height, width }) => {
 
         <div className={`d-flex justify-content-center align-items-center mt-3 `}>
           <div
-            className={`${isScanning ? "d-none" : ""} border border-dark px-5 w-75 ms-3 me-3 rounded d-flex justify-content-center align-items-center `}
+            className={`${isScanning ? "d-none" : ""} ${scanResult ? "d-none":""} border border-dark px-5 w-75 ms-3 me-3 rounded d-flex justify-content-center align-items-center `}
             style={{ height: "39px" }}
           >
             Search
@@ -80,7 +80,7 @@ const Auditorium = ({ height, width }) => {
           <div className="text-center">
                 <img
                   onClick={() => setIsScanning(true)}
-                  className={`me-3 ${isScanning ? "d-none" : ""}`}
+                  className={`me-3 ${isScanning ? "d-none" : ""} ${scanResult ? "d-none":""}`}
                   width={"50px"}
                   src={QrIcon}
                   alt="QR Scanner"
