@@ -59,9 +59,9 @@ const Auditorium = ({ height, width }) => {
         >
           <div className="d-flex gap-3">
             <i onClick={back} className="fa-solid fa-angle-left fs-3 "></i>
-            <h6 style={{  marginTop: "1px" }}>
+            <h5 style={{  marginTop: "1px" }}>
               Auditorium, place
-            </h6>
+            </h5>
           </div>
           <p style={{ marginTop: "3px" }} className="text-success fw-semibold ">
             08:30 am
@@ -122,7 +122,7 @@ const Auditorium = ({ height, width }) => {
 
         <button
           className="btn btn-success fs-4 d-flex align-items-center justify-content-center rounded-circle"
-          style={{ position: "fixed", bottom: "120px", right: "15px",width:'45px',height:"45px" }}
+          style={{ position: "fixed", bottom: "120px", right: "15px",width:'50px',height:"50px" }}
         >
           +
         </button>
