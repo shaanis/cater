@@ -5,18 +5,20 @@ import QrIcon from "../assets/scanner.png";
 const QrScanner = () => {
   const [scanResult, setScanResult] = useState(null);
   const [isScanning, setIsScanning] = useState(false);
+  const [scanTimedOut, setScanTimedOut] = useState(false);
   const qrScannerRef = useRef(null);
   const timeoutRef = useRef(null);
 
   useEffect(() => {
     if (isScanning) {
-      const qrCodeScanner = new Html5Qrcode("qr-reader");
-      qrScannerRef.current = qrCodeScanner;
+      setScanTimedOut(false); // Reset timeout message when starting scan
+      const qrScanner = new Html5Qrcode("qr-reader");
+      qrScannerRef.current = qrScanner;
 
-      qrCodeScanner
+      qrScanner
         .start(
           { facingMode: "environment" }, // Use back camera
-          { fps: 10, qrbox: { width: 250, height: 250 } },
+          { fps: 10, qrbox: { width: 300, height: 300 } },
           (decodedText) => {
             setScanResult(decodedText);
             stopScanning(); // Stop scanning once QR code is detected
@@ -31,15 +33,21 @@ const QrScanner = () => {
 
       // Auto stop scanning after 1 minute
       timeoutRef.current = setTimeout(() => {
-        stopScanning();
         console.warn("QR scanning timed out.");
-      }, 5000); // Increased timeout to 1 min
+        setScanTimedOut(true);
+        stopScanning(false); // Stop scanning but keep UI visible
+      }, 5000);
 
-      return () => stopScanning();
+      return () => {
+        clearTimeout(timeoutRef.current);
+        if (qrScannerRef.current) {
+          qrScannerRef.current.stop().catch(() => {}); // Ensure scanner stops safely
+        }
+      };
     }
   }, [isScanning]);
 
-  const stopScanning = () => {
+  const stopScanning = (hideScanner = true) => {
     clearTimeout(timeoutRef.current);
     if (qrScannerRef.current) {
       qrScannerRef.current
@@ -47,7 +55,7 @@ const QrScanner = () => {
         .then(() => qrScannerRef.current.clear())
         .catch((err) => console.warn("Error stopping scanner:", err));
     }
-    setIsScanning(false);
+    if (hideScanner) setIsScanning(false); // Hide only if explicitly asked
   };
 
   return (
@@ -60,7 +68,17 @@ const QrScanner = () => {
         alt="QR Scanner"
       />
 
-      {isScanning && <div id="qr-reader" style={{ width: "300px", margin: "auto" }}></div>}
+      {isScanning && (
+        <div>
+          <div id="qr-reader" style={{ width: "320px", margin: "auto" }}></div>
+          {scanTimedOut && (
+            <div className="mt-3 text-danger">
+              <h5>Scan Timed Out</h5>
+              <p>Please try again.</p>
+            </div>
+          )}
+        </div>
+      )}
 
       {scanResult && (
         <div className="mt-3">
