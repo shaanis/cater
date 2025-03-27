@@ -117,12 +117,15 @@ const Auditorium = ({ height, width }) => {
             <h3>1</h3>
             <h3>Name</h3>
           </div>
-          <p className="text-secondary mt-3 me-5">c/o</p>
+          <div className="d-flex gap-2 justify-content-center align-items-center mt-3 ">
+            <p className="text-secondary ">c/o</p>
+            <p style={{fontSize:'12px'}} className="text-danger btn ">remove</p>
+          </div>
         </div>
 
         <button
-          className="btn btn-danger  d-flex align-items-center justify-content-center mb-3 "
-          style={{ position: "fixed", bottom: "160px", right: "15px",fontSize:'12px' }}
+          className="btn btn-danger float-end me-3 mt-2  d-flex align-items-center justify-content-center mb-3 "
+          style={{ fontSize:'13px' }}
         >
           Close
         </button>
