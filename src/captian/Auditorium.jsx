@@ -1,10 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import QrIcon from "../assets/scanner.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import QrScanner from "./QrScanner";
+import { Html5QrcodeScanner, Html5Qrcode, Html5QrcodeScanType } from "html5-qrcode";
+
 
 const Auditorium = ({ height, width }) => {
+  const [scanResult, setScanResult] = useState(null);
+    const [isScanning, setIsScanning] = useState(false);
+    const [qrScanner, setQrScanner] = useState(null);
+     useEffect(() => {
+        if (isScanning) {
+          const scanner = new Html5QrcodeScanner(
+            "qr-reader",
+            {
+              fps: 10,
+              qrbox: { width: 250, height: 250 },
+              supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+            },
+            false
+          );
+    
+          scanner.render(
+            (decodedText) => {
+              setScanResult(decodedText);
+              setIsScanning(false);
+              scanner.clear(); // Stop scanning after success
+            },
+            (error) => {
+              console.warn("QR Scan Error:", error);
+            }
+          );
+    
+          setQrScanner(scanner);
+        }
+    
+        return () => {
+          if (qrScanner) {
+            qrScanner.clear().catch((err) => console.warn("Error clearing scanner:", err));
+          }
+        };
+      }, [isScanning]);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const back = () => {
@@ -31,15 +68,36 @@ const Auditorium = ({ height, width }) => {
           </p>
         </div>
 
-        <div className="d-flex justify-content-center align-items-center mt-3">
+        <div className={`d-flex justify-content-center align-items-center mt-3 `}>
           <div
-            className="border border-dark px-5 w-75 ms-3 me-3 rounded d-flex justify-content-center align-items-center"
+            className={`${isScanning ? "d-none" : ""} border border-dark px-5 w-75 ms-3 me-3 rounded d-flex justify-content-center align-items-center `}
             style={{ height: "39px" }}
           >
             Search
           </div>
           {/* <img className="me-3" width={"50px"} src={QrIcon} alt="QR Scanner" /> */}
-          <QrScanner/>
+          {/* <QrScanner/> */}
+          <div className="text-center">
+                <img
+                  onClick={() => setIsScanning(true)}
+                  className={`me-3 ${isScanning ? "d-none" : ""}`}
+                  width={"50px"}
+                  src={QrIcon}
+                  alt="QR Scanner"
+                />
+          
+                {isScanning && <div id="qr-reader" style={{ width: "300px", margin: "auto" }}></div>}
+          
+                {scanResult && (
+                  <div className="mt-3">
+                    <h5>Scanned QR Code:</h5>
+                    <p>{scanResult}</p>
+                    <button className="btn btn-success" onClick={() => setIsScanning(true)}>
+                      Scan Again
+                    </button>
+                  </div>
+                )}
+              </div>
         </div>
 
         <div className="d-flex justify-content-between align-items-center ms-3 me-3 mt-4">
