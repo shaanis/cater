@@ -59,9 +59,9 @@ const Auditorium = ({ height, width }) => {
         >
           <div className="d-flex gap-3">
             <i onClick={back} className="fa-solid fa-angle-left fs-3 "></i>
-            <h3 style={{ fontSize: "16px", marginTop: "1px" }}>
+            <h6 style={{  marginTop: "1px" }}>
               Auditorium, place
-            </h3>
+            </h6>
           </div>
           <p style={{ marginTop: "3px" }} className="text-success fw-semibold ">
             08:30 am
@@ -107,7 +107,8 @@ const Auditorium = ({ height, width }) => {
 
         <hr className="border w-100 shadow border-secondary mx-1 mb-3" />
 
-        <p className="ms-3">Boys :</p>
+        <div className="d-flex justify-content-between "><p className="ms-3">Boys :</p>
+         <p style={{fontSize:'13px'}} className=" btn">clear all</p></div>
         <div
           onClick={handleShow}
           className="d-flex justify-content-between align-items-center border rounded border border-dark mx-3 mt-4 "
